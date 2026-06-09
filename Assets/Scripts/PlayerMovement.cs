@@ -56,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         Invoke(nameof(ResetAttack), 0.5f);
+        AudioManager.Instance.PlayPlayerAttack();
     }
 
     void ResetAttack() => isAttacking = false;

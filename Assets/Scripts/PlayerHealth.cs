@@ -10,24 +10,27 @@ public class PlayerHealth : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D other)
-{
-    if (other.CompareTag("Enemy"))
     {
-        Destroy(other.gameObject);
-        FindObjectOfType<EnemySpawner>().EnemyKilled();
-        GameManager.Instance.LoseLife();
+        if (other.CompareTag("Enemy"))
+        {
+            Destroy(other.gameObject);
+            FindObjectOfType<EnemySpawner>().EnemyKilled();
+            GameManager.Instance.LoseLife();
 
-        if (GameManager.Instance.GetLives() <= 0)
-        {
-            animator.SetTrigger("Death");
-            Invoke(nameof(ShowGameOver), 1f);
-        }
-        else
-        {
-            animator.SetTrigger("Hurt");
+            if (GameManager.Instance.GetLives() <= 0)
+            {
+                animator.SetTrigger("Death");
+                GetComponent<PlayerMovement>().enabled = false;
+                // testing point: no player movement after death
+                Invoke(nameof(ShowGameOver), 1f);
+            }
+            else
+            {
+                animator.SetTrigger("Hurt");
+                AudioManager.Instance.PlayPlayerHit();
+            }
         }
     }
-}
 
     void ShowGameOver()
     {

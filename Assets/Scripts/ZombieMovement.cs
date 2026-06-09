@@ -37,5 +37,6 @@ public class ZombieMovement : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;
         enabled = false;
         Destroy(gameObject, 0.8f);
+        AudioManager.Instance.PlayZombieHarm();
     }
 }
